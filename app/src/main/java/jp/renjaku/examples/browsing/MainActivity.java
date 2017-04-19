@@ -17,10 +17,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final String url = "http://httpbin.org/headers";
+        final String url = getString(R.string.endpoint);
+
+        String auth = getString(
+                R.string.authorization_header_value,
+                getString(R.string.app_name),
+                getString(R.string.access_token));
 
         final Bundle headers = new Bundle();
-        headers.putString("X-Token", "mine");
+        headers.putString(getString(R.string.authorization_header_name), auth);
 
         findViewById(R.id.open_in_browser).setOnClickListener(
                 new View.OnClickListener() {
@@ -35,12 +40,27 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        findViewById(R.id.open_in_app).setOnClickListener(
+        findViewById(R.id.open_in_custom_tabs).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // カスタムタブで開く.
+                        // Chrome Custom Tabs で開く.
+                        // バージョンによっては、システム既定のブラウザで開かれる.
                         jp.renjaku.android.browser.Browser.open(MainActivity.this, url, headers);
+                    }
+                });
+
+        findViewById(R.id.open_in_web_view).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // WebView で開く.
+                        // Requires <uses-permission android:name="android.permission.INTERNET" />.
+                        Intent intent = new Intent(getApplicationContext(),
+                                WebViewActivity.class);
+                        intent.putExtra("url", url);
+                        intent.putExtra("headers", headers);
+                        startActivity(intent);
                     }
                 });
     }

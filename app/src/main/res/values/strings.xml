@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Browsing</string>
+    <string name="endpoint">http://httpbin.org/headers</string>
+    <string name="access_token">mine</string>
+    <string name="authorization_header_name">Authorization</string>
+    <string name="authorization_header_value">%1$s %2$s</string>
+    <string name="open_in_browser">Open in browser</string>
+    <string name="open_in_custom_tabs">Open in Chrome Custom Tabs</string>
+    <string name="open_in_web_view">Open in WebView</string>
 </resources>
